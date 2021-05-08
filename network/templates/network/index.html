@@ -1,0 +1,34 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block script %}
+<script>
+    var like_src = "{% static 'network/like.png' %}";
+    var liked_src = "{% static 'network/liked.png' %}";
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'network/tweet.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+      <h1 class="p-2">All Posts</h1>
+      <hr>
+      {% if user.is_authenticated %}
+      <div class="mx-auto bg-light rounded w-75 p-3">
+      <h3>New Post</h3>
+      <form>
+        <div class="text-center">
+        <textarea class="text-justify form-control" id="tweet-body" placeholder="Write a new post."></textarea>
+        </div>
+        <input type="submit" value="Post" id="new-tweet" class="text-center mt-1 btn btn-primary"/>
+      </form>
+      </div>
+      {% endif %}
+      <div id="all_posts" class="mx-auto w-75 mt-3"></div>
+
+    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+<ul class="pagination" id="page_number">
+</ul>
+</nav>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block title %}Social Network | Following{% endblock %}
+
+{% block script %}
+<script>
+    var like_src = "{% static 'network/like.png' %}";
+    var liked_src = "{% static 'network/liked.png' %}";
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'network/following.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<h3 class="pt-3 pl-2">Latest Posts Of People you Follow</h3>
+<hr>
+<div id="all_posts" data-max_post="{{tweets|length}}" class="mx-auto w-75 mt-3">
+  {% if tweets|length == 0  %}
+  <p class="text-center mx-auto">You haven't followed anyone!!!</p>
+  {% else %}
+{% for tweet in tweets %}
+<div class="bg-light rounded p-3 mb-3 posts" id="post{{forloop.counter}}">
+<p style="text-align:left;vertical-align:middle;" class="border-bottom pb-1"><span data-username="{{tweet.user}}" class="user" style="cursor: pointer;">
+<span class="h5">{{tweet.first_name}} {{tweet.last_name}}</span><br/>
+<span class="small">@{{tweet.user}}</span>
+</span></p>
+<p id="b{{tweet.id}}" class="text-justify">{{tweet.body}}</p>
+<p class="p-1 border-top"><span class="float-left"><img style="cursor: pointer;" id="l{{tweet.id}}" data-tweetid="{{tweet.id}}" data-l_u = "{{tweet.flag}}" role="button" class="pr-1 like" width="20px"><span id="lv{{tweet.id}}">{{tweet.like}}</span></span>
+<span class="float-right">{{tweet.timestamp}}</span></p>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+<ul class="pagination" id="page_number">
+</ul>
+</nav>
+{% endblock %}
